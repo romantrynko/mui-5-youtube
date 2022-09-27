@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Stack, Typography } from '@mui/material'
-import { Sidebar, Videos } from '.'
-import { fetchFromApi } from '../utils/fetchFromAPI';
+import React, { useEffect, useState } from 'react';
+import { Box, Stack, Typography } from '@mui/material';
+import { Sidebar, Videos } from '.';
+import fetchFromApi from '../utils/fetchFromAPI';
 
-const Feed = () => {
-
-  const [selectedCategory, setSelectedCategory] = useState('New')
+function Feed() {
+  const [selectedCategory, setSelectedCategory] = useState('New');
+  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    fetchFromApi(`search?part=snippet&q=${selectedCategory}`)
-  }, [selectedCategory])
+    fetchFromApi(`search?part=snippet&q=${selectedCategory}`).then((data) => setVideos(data.items));
+  }, [selectedCategory]);
 
   return (
     <Stack sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
@@ -19,14 +19,15 @@ const Feed = () => {
         },
         borderRight: '1px solid #3d3d3d',
         px: { sx: 0, md: 2 }
-      }}>
+      }}
+      >
         <Sidebar
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
         <Typography
-          className='copyright'
-          variant='body2'
+          className="copyright"
+          variant="body2"
           sx={{ mt: 1.5, color: '#fff' }}
         >
           Copyright 2022 Trynko Roman ®
@@ -35,18 +36,20 @@ const Feed = () => {
 
       <Box p={2} sx={{ overflowY: 'auto', height: '90vh', flex: 2 }}>
         <Typography
-          variant='h4'
-          fontWeight='bold'
+          variant="h4"
+          fontWeight="bold"
           mb={2}
           sx={{ color: 'white' }}
         >
-          {selectedCategory} <span style={{ color: '#fc1503' }}>videos</span>
+          {selectedCategory}
+          {' '}
+          <span style={{ color: '#fc1503' }}>videos</span>
         </Typography>
 
-        <Videos videos={[]} />
+        <Videos videos={videos} />
       </Box>
     </Stack>
-  )
+  );
 }
 
-export default Feed
+export default Feed;

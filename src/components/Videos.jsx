@@ -1,9 +1,21 @@
-import React from 'react'
+import React from 'react';
+import { Stack, Box } from '@mui/material';
+import { VideoCard, ChannelCard } from './';
 
-const Videos = () => {
-  return (
-    <div>Videos</div>
-  )
-}
+const Videos = ({ videos }) => (
+  <Stack
+    direction={'row'}
+    flexWrap='wrap'
+    justifyContent='start'
+    gap={2}
+  >
+    {videos.map((item, index) => (
+      <Box key={index}>
+      {item.id.channelId && <ChannelCard channelDetail={item} />}
+      {item.id.videoId && <VideoCard video={item} />}
+      </Box>
+    ))}
+  </Stack>
+)
 
 export default Videos
