@@ -14,9 +14,9 @@ const options = {
 };
 
 const fetchFromApi = async (url) => {
-  // const { data } = await axios.get(`${BASE_URL}/${url}`, options)
+  const { data } = await axios.get(`${BASE_URL}/${url}`, options)
   console.log('fetching...');
-  const data = [{ name: 'Roman', age: url }];
+  // const data = [{ name: 'Roman', age: url }];
   return data;
 };
 
